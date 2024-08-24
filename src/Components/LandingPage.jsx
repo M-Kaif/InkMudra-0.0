@@ -16,7 +16,7 @@ const LandingPage = () => {
                 <li><a href="#" className="text-gray-500 font-semibold hover:text-gray-800">Services</a></li>
                 <li><a href="#" className="text-gray-500 font-semibold hover:text-gray-800">Contact</a></li>
                 <li><Link to="signup" className="text-gray-500 font-semibold hover:text-gray-800">Sign up</Link></li>
-                <li><Link to="login" className="text-gray-500 font-semibold hover:text-gray-900 ">Login</Link></li>
+                <li><Link to="signin" className="text-gray-500 font-semibold hover:text-gray-900 ">Sign In</Link></li>
               </ul>
             </nav>
           </div>
