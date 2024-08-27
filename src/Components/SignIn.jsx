@@ -13,15 +13,16 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import signupbook from '../assets/signupbook.jpg';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const defaultTheme = createTheme();
 
 export default function SignIn() {
-  const [password, setPassword] = React.useState('');
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [errors, setErrors] = React.useState({});
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
 
   const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
@@ -45,10 +46,11 @@ export default function SignIn() {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log({
-        email,
-        password,
-      });
+      // Simulate a sign-in success by storing a token in sessionStorage
+      sessionStorage.setItem('userToken', 'your-auth-token');
+      
+      // Redirect to another page after sign-in
+      navigate('/'); // Adjust this to the page you want to navigate to after signing in
     }
   };
 
@@ -69,7 +71,6 @@ export default function SignIn() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
-
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -100,7 +101,6 @@ export default function SignIn() {
                     color: 'black',
                   },
                 }}
-                
               />
               <TextField
                 margin="normal"
@@ -125,14 +125,13 @@ export default function SignIn() {
                     <div
                       onClick={() => setShowPassword(!showPassword)}
                       style={{ marginRight: 8 }}
-                      className='p-1 rounded-full hover:bg-gray-200 cursor-pointer'
+                      className="p-1 rounded-full hover:bg-gray-200 cursor-pointer"
                     >
                       {showPassword ? <VisibilityOff /> : <Visibility />}
                     </div>
                   ),
                   style: {
                     borderColor: 'black',
-                    
                   },
                 }}
                 InputLabelProps={{

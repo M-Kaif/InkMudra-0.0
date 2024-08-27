@@ -13,7 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import signupbook from '../assets/signupbook.jpg';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import Alert from '@mui/material/Alert';
 
 const defaultTheme = createTheme();
 
@@ -24,6 +25,8 @@ export default function SignUp() {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [showAlert, setShowAlert] = useState(false); // State to manage alert visibility
+  const navigate = useNavigate();
 
   const validateName = (name) => /^[A-Za-z]+$/.test(name);
 
@@ -31,7 +34,7 @@ export default function SignUp() {
     if (!email) return false;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const restrictedDomains = ['.co', '.c', '.org', '.net']; // Add any other restricted domains here
+    const restrictedDomains = ['.co', '.c', '.org', '.net'];
 
     if (!emailRegex.test(email)) {
       return false;
@@ -76,12 +79,11 @@ export default function SignUp() {
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
-      console.log({
-        firstName,
-        lastName,
-        email,
-        password,
-      });
+      sessionStorage.setItem('userToken', 'your-auth-token');
+      sessionStorage.setItem('userName', `${firstName} ${lastName}`);
+      navigate('/');
+    } else {
+      setShowAlert(true); 
     }
   };
 
@@ -114,6 +116,14 @@ export default function SignUp() {
             <Typography component="h1" variant="h5" className="font-bold">
               Sign up
             </Typography>
+
+            
+            {showAlert && (
+              <Alert severity="warning" onClose={() => setShowAlert(false)} sx={{ width: '100%', mt: 2 }}>
+                Please correct the highlighted errors and try again.
+              </Alert>
+            )}
+
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
@@ -127,10 +137,8 @@ export default function SignUp() {
                     autoFocus
                     value={firstName}
                     sx={{
-                        borderColor: 'black',
-
-                    }
-                    }
+                      borderColor: 'black',
+                    }}
                     onChange={(e) => {
                       setFirstName(e.target.value);
                       if (errors.firstName) {
@@ -203,7 +211,7 @@ export default function SignUp() {
                         <div
                           onClick={() => setShowPassword(!showPassword)}
                           style={{ marginRight: 8 }}
-                          className='cursor-pointer hover:bg-gray-200 p-1 rounded-full'
+                          className="cursor-pointer hover:bg-gray-200 p-1 rounded-full"
                         >
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </div>

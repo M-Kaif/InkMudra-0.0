@@ -3,6 +3,9 @@ import { Printer, Truck, Book, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const LandingPage = () => {
+  // Check if the user is signed in by looking for a key in sessionStorage
+  const isUserSignedIn = !!sessionStorage.getItem('userToken'); // Adjust the key as per your application logic
+
   return (
     <div className="min-h-screen bg-gray-100">
       {/* Header */}
@@ -15,8 +18,15 @@ const LandingPage = () => {
                 <li><a href="#" className="text-gray-500 font-semibold hover:text-gray-800">Home</a></li>
                 <li><a href="#" className="text-gray-500 font-semibold hover:text-gray-800">Services</a></li>
                 <li><a href="#" className="text-gray-500 font-semibold hover:text-gray-800">Contact</a></li>
-                <li><Link to="signup" className="text-gray-500 font-semibold hover:text-gray-800">Sign up</Link></li>
-                <li><Link to="signin" className="text-gray-500 font-semibold hover:text-gray-900 ">Sign In</Link></li>
+                {/* Conditional Rendering */}
+                {isUserSignedIn ? (
+                  <li><Link to="/form" className="text-gray-500 font-semibold hover:text-gray-800">Form</Link></li>
+                ) : (
+                  <>
+                    <li><Link to="signup" className="text-gray-500 font-semibold hover:text-gray-800">Sign up</Link></li>
+                    <li><Link to="signin" className="text-gray-500 font-semibold hover:text-gray-800">Sign In</Link></li>
+                  </>
+                )}
               </ul>
             </nav>
           </div>
@@ -62,7 +72,6 @@ const LandingPage = () => {
           </div>
         </div>
       </section>
-
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-8">
