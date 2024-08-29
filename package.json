@@ -15,6 +15,7 @@
     "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "lucide-react": "^0.435.0",
+    "pdf-lib": "^1.17.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.26.1"
